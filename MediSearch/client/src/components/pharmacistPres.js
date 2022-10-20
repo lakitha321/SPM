@@ -12,11 +12,16 @@ const FilesList = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [modalShow, setModalShow] = useState(false);
 
+  const [newArea, setNewArea] = useState('');
+  const [updateArea, setUpdateArea] = useState('');
+
   const [modalShow2, setModalShow2] = useState(false);
   const [id2, setId2] = useState('');
   const [message, setMessage] = useState('');
 
   const [id, setId] = useState('');
+
+  const [test, setTest] = useState('');
 
   const {state, dispatch} = useContext(UserContext);
   dispatch({type:"USER", payload:2})
@@ -59,7 +64,7 @@ const FilesList = () => {
       feedback
     }
 
-    axios.put(`http://localhost:8040/pres/edit/${id}`, pFeedback).then((res) => {
+    axios.put(`http://localhost:8040/pres/edit/${id}/`, pFeedback).then((res) => {
         alert(res.data);
         window.location.reload(false);
     }).catch((err) => {
@@ -70,106 +75,62 @@ const FilesList = () => {
 
   const updateFeedback = async () => {
 
-    var feed = document.getElementById("feedbk").value;
-    alert(feed);
+    var feedback = document.getElementById("feedbk").value;
+    // alert(feed);
 
-    // const pFeedback = {
-    //   feedback
-    // }
+    const pFeedback = {
+      feedback
+    }
 
-    // axios.put(`http://localhost:8040/pres/edit/${id}`, pFeedback).then((res) => {
-    //     alert(res.data);
-    //     // window.location.reload(false);
-    // }).catch((err) => {
-    //     alert(err);
-    // })
+    axios.put(`http://localhost:8040/pres/edit/${id}/${localStorage.getItem("aemail")}`, pFeedback).then((res) => {
+        alert(res.data);
+        setNewArea('');
+        window.location.reload(false);
+    }).catch((err) => {
+        alert(err);
+    })
 
   }
 
   const updateMessage = async () => {
 
-    var newFeed = document.getElementById("pfeed").value;
+    var feedback = document.getElementById("pfeed").value;
+    // alert(feed);
 
-    alert(newFeed);
+    const pFeedback = {
+      feedback
+    }
 
-    // const message = {
-    //     newMessage
-    // }
-
-    // axios.put(`http://localhost:8040/message/${id}`, message).then((res) => {
-    //     alert(res.data);
-    //     window.location.reload(false);
-    // }).catch((err) => {
-    //     alert(err);
-    // })
+    axios.put(`http://localhost:8040/pres/edit/${id2}`, pFeedback).then((res) => {
+        alert(res.data);
+        setNewArea('');
+        window.location.reload(false);
+    }).catch((err) => {
+        alert(err);
+    })
 
   }
 
+  const cancelUpdate2 = () => {
+    setUpdateArea('');
+  }
+
+  const cancelUpdate = () => {
+    setNewArea('');
+  }
   
   const passValues = (id) => {
     setId(id);
 
-    setModalShow(true);
-  }
-
-  function MyVerticallyCenteredModal(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        align='center'
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Add Feedback
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <form class="d-flex" onSubmit={() => updateFeedback()}>
-        <input class="form-control me-2" id="feedbk" type="search" placeholder="Enter a feedback" aria-label="Search" required />
-        <button class="btn btn-success" type="submit" style={{height:'50px'}}>
-            Submit
-        </button>
-        </form>
-        </Modal.Body>
-      </Modal>
-    );
+    setNewArea(id);
   }
 
   const passValues2 = (id, message) => {
     setId2(id);
     setMessage(message);
 
-    setModalShow2(true);
+    setUpdateArea(id);
   }
-
-  function MyVerticallyCenteredModal2(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        align='center'
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Edit Message
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <form class="d-flex" onSubmit={() => updateMessage()}>
-            <input class="form-control me-2" id="pfeed" type="text" placeholder="Enter a feedback" aria-label="Search" defaultValue={message} required />
-            <button class="btn btn-success" type="submit">
-                Done
-            </button>
-        </form>
-        </Modal.Body>
-      </Modal>
-    );
-}
 
   return (
     <div className="container" align="center">
@@ -199,7 +160,25 @@ const FilesList = () => {
                         {feedback ? (
                           <>
                           <p>Feedback : {feedback}</p>
-                          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                          {updateArea === _id ? (
+                            <>
+                            <form onSubmit={() => updateMessage()}>
+                            <textarea id="pfeed" name="w3review" rows="4" cols="25" defaultValue={message} />
+                              {/* <input class="form-control me-2" id="pfeed" type="text" placeholder="Enter a feedback" aria-label="Search" defaultValue={message} required /> */}
+                              <button class="btn btn-danger" type="button"
+                              onClick={() => cancelUpdate2()}
+                              >
+                                  Cancel
+                              </button>
+                              &nbsp;
+                              <button class="btn btn-success" type="submit">
+                                  Save Changes
+                              </button>
+                            </form>
+                            </>
+                          ):(
+                            <>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-primary"
                             onClick={() => passValues2(_id, feedback)}
                             >Edit Feedback</button>
@@ -207,26 +186,39 @@ const FilesList = () => {
                             onClick={() => deleteFeedback(_id)}
                             >Delete</button>
                           </div>
+                            </>
+                          )}
                           </>
                         ):(
                           <>
-                          <button type="button" className="btn btn-success" style={{width: '13rem'}}
-                        onClick={() => passValues(_id)}
-                        >
-                        Add Feedback
-                        </button>
+                          {newArea === _id ? (
+                          <form onSubmit={() => updateFeedback()}>
+                          <textarea id="feedbk" name="w3review" rows="4" cols="25" />
+                          {/* <input class="form-control me-2" id="feedbk" type="search" placeholder="Enter a feedback" aria-label="Search" required /> */}
+                          <button class="btn btn-danger" type="button"
+                          onClick={() => cancelUpdate()}
+                          >
+                            Cancel
+                          </button>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <button class="btn btn-success" type="submit">
+                              Save
+                          </button>
+                          </form>
+                          
+                          ):(
+                            <>
+                              <button type="button" className="btn btn-success" style={{width: '13rem'}}
+                              onClick={() => passValues(_id)}
+                              >
+                              Add Feedback
+                              </button>
+                            </>
+                          )}
                           </>
                         )}
                     </Card.Body>
                     </Card><br/><br/><br/>
-                    <MyVerticallyCenteredModal
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                    />
-                    <MyVerticallyCenteredModal2
-                        show={modalShow2}
-                        onHide={() => setModalShow2(false)}
-                    />
                 </div>
               )
             )

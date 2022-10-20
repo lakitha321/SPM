@@ -148,7 +148,7 @@ routerA.route('/edit/:id').put(async (req, res) => {
   const feedback = req.body.feedback;
 
   const update = await File.findByIdAndUpdate(id, {feedback:feedback}).then(()=>{
-      res.json("Feedback Updated");
+      res.json("Feedback Deleted");
   }).catch((err)=>{
       res.json("Error");
   })
