@@ -23,18 +23,15 @@ const PharmasistSchema = new mongoose.Schema({
     },
 
     shop_name : {
-        type : String,
-        required : true
+        type : String
     },
 
     shop_district : {
-        type : String,
-        required : true
+        type : String
     },
 
     shop_location : {
-        type : String,
-        required : true
+        type : String
     },
 
     password : {

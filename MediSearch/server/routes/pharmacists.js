@@ -60,9 +60,6 @@ router.route("/:id").put(async (req,res)=>{
         email,
         nic,
         mobile,
-        shop_name,
-        shop_district,
-        shop_location,
         password
     }
 

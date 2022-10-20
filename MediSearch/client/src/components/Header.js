@@ -19,7 +19,7 @@ function Header(){
     var aemail = localStorage.getItem("aemail");
     var anic = localStorage.getItem("anic");
     var amobile = localStorage.getItem("amobile");
-    var ashop_name = localStorage.getItem("ashop_name");
+    var aarea = localStorage.getItem("aarea");
     var ashop_address = localStorage.getItem("ashop_address");
     var ashop_location = localStorage.getItem("ashop_location");
 
@@ -53,7 +53,7 @@ function Header(){
         if (result1) {
             const result2 = await confirm("Your account wil be permenantly deleted!!!");
             if(result2){
-              axios.delete(`http://localhost:8060/customer/${aid}`).then((res) => {
+              axios.delete(`http://localhost:8040/pharmacist/${aid}`).then((res) => {
                 localStorage.setItem("aid", "");
                 localStorage.setItem("aname", "");
                 localStorage.setItem("aemail", "");
@@ -132,6 +132,10 @@ function Header(){
                     <tr>
                         <td className="fs-5">Mobile</td>
                         <td className="fs-5">{amobile}</td>
+                    </tr>
+                    <tr>
+                        <td className="fs-5">Area</td>
+                        <td className="fs-5">{aarea}</td>
                     </tr>
                 </table>
                 <br/>

@@ -8,16 +8,14 @@ import { UserContext } from "../App";
 function CusUpdate() {
 
     const {state1, dispatch} = useContext(UserContext);
-    dispatch({type:"USER", payload:1})
+    dispatch({type:"USER", payload:2})
 
     const [validated, setValidated] = useState(false);
-    const navigate = useNavigate();
 
     const id = localStorage.getItem("aid");
     const [name, setName] = useState(localStorage.getItem("aname"));
     const [email, setEmail] = useState(localStorage.getItem("aemail"));
     const [nic, setNic] = useState(localStorage.getItem("anic"));
-    const [address, setAddress] = useState(localStorage.getItem("aaddress"));
     const [mobile, setMobile] = useState(localStorage.getItem("amobile"));
     const [password, setPassword] = useState(localStorage.getItem("apassword"));
   
@@ -46,22 +44,22 @@ function CusUpdate() {
             name,
             email,
             nic,
-            address,
             mobile,
             password
         }
 
-        axios.put(`http://localhost:8060/farmer/${id}`, updateSudent).then((res)=>{
+        axios.put(`http://localhost:8040/pharmacist/${id}`, updateSudent).then((res)=>{
             alert(res.data.msg);
             if(res.data.status){
-                localStorage.setItem("sid", id);
-                localStorage.setItem("sname", updateSudent.name);
-                localStorage.setItem("semail", updateSudent.email);
-                localStorage.setItem("snic", updateSudent.nic);
-                localStorage.setItem("saddress", updateSudent.address);
-                localStorage.setItem("smobile", updateSudent.mobile);
-                localStorage.setItem("spassword", updateSudent.password);
-                window.location.assign("/home");
+                localStorage.setItem("aid", id);
+                localStorage.setItem("aname", updateSudent.name);
+                localStorage.setItem("aemail", updateSudent.email);
+                localStorage.setItem("anic", updateSudent.nic);
+                localStorage.setItem("aaddress", updateSudent.address);
+                localStorage.setItem("amobile", updateSudent.mobile);
+                localStorage.setItem("apassword", updateSudent.password);
+                localStorage.setItem("apassword", updateSudent.password);
+                window.location.assign("/farmerhome");
             }
             
         }).catch((err)=>{
@@ -107,17 +105,6 @@ function CusUpdate() {
                     required />
                     <Form.Control.Feedback type="invalid">
                     Please provide a valid NIC.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="11" controlId="validationCustom03">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" placeholder="Address" defaultValue={address} pattern="[a-zA-Z0-9._+-/(), ]{10,}"
-                    onChange={(e) => {
-                        setAddress(e.target.value);
-                    }}
-                    required />
-                    <Form.Control.Feedback type="invalid">
-                    Please provide a valid Address.
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="3" controlId="validationCustom04">
