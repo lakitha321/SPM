@@ -46,19 +46,17 @@ function CusUpdate() {
             name,
             email,
             nic,
-            address,
             mobile,
             password
         }
 
-        axios.put(`http://localhost:8060/customer/${id}`, updateSudent).then((res)=>{
+        axios.put(`http://localhost:8040/civilian/${id}`, updateSudent).then((res)=>{
             alert(res.data.msg);
             if(res.data.status){
                 localStorage.setItem("sid", id);
                 localStorage.setItem("sname", updateSudent.name);
                 localStorage.setItem("semail", updateSudent.email);
                 localStorage.setItem("snic", updateSudent.nic);
-                localStorage.setItem("saddress", updateSudent.address);
                 localStorage.setItem("smobile", updateSudent.mobile);
                 localStorage.setItem("spassword", updateSudent.password);
                 window.location.assign("/home");
@@ -107,17 +105,6 @@ function CusUpdate() {
                     required />
                     <Form.Control.Feedback type="invalid">
                     Please provide a valid NIC.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="11" controlId="validationCustom03">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" placeholder="Address" defaultValue={address} pattern="[a-zA-Z0-9._+-/(), ]{10,}"
-                    onChange={(e) => {
-                        setAddress(e.target.value);
-                    }}
-                    required />
-                    <Form.Control.Feedback type="invalid">
-                    Please provide a valid Address.
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="3" controlId="validationCustom04">

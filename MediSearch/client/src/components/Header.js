@@ -30,7 +30,7 @@ function Header(){
         if (result1) {
             const result2 = await confirm("Your account wil be permenantly deleted!!!");
             if(result2){
-              axios.delete(`http://localhost:8060/customer/${sid}`).then((res) => {
+              axios.delete(`http://localhost:8040/civilian/${sid}`).then((res) => {
                 localStorage.setItem("sid", "");
                 localStorage.setItem("sname", "");
                 localStorage.setItem("semail", "");
@@ -93,8 +93,8 @@ function Header(){
                     <td className="fs-7">{smobile}</td>
                 </tr>
                 <tr>
-                    <td className="fs-7">Address</td>
-                    <td className="fs-7">{saddress}</td>
+                    <td className="fs-7">District</td>
+                    <td className="fs-7">{localStorage.getItem("sdistrict")}</td>
                 </tr>
             </table>
             <br/>

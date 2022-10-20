@@ -55,7 +55,7 @@ function Login() {
                 localStorage.setItem("sname", res.data.Civilians.name);
                 localStorage.setItem("semail", res.data.Civilians.email);
                 localStorage.setItem("snic", res.data.Civilians.nic);
-                localStorage.setItem("saddress", res.data.Civilians.address);
+                localStorage.setItem("sdistrict", res.data.Civilians.district);
                 localStorage.setItem("smobile", res.data.Civilians.mobile);
                 localStorage.setItem("spassword", res.data.Civilians.password);
 

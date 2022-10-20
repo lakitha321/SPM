@@ -23,8 +23,7 @@ const customerSchema = new mongoose.Schema({
     },
 
     district : {
-        type : String,
-        required : true
+        type : String
     },
 
     password : {

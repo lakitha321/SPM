@@ -54,7 +54,6 @@ router.route("/:id").put(async (req,res)=>{
     const email = req.body.email;
     const nic = req.body.nic;
     const mobile = req.body.mobile;
-    const district = req.body.district;
     const password = req.body.password;
 
     const updateCivilian = {
@@ -62,7 +61,6 @@ router.route("/:id").put(async (req,res)=>{
         email,
         nic,
         mobile,
-        district,
         password
     }
 
